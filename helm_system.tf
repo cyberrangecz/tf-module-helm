@@ -21,3 +21,13 @@ resource "helm_release" "reloader" {
   create_namespace = true
   wait             = true
 }
+
+resource "helm_release" "longhorn" {
+  count            = var.deploy_longhorn ? 1 : 0
+  name             = "longhorn"
+  namespace        = "longhorn"
+  repository       = "https://charts.longhorn.io"
+  chart            = "longhorn"
+  create_namespace = true
+  wait             = true
+}

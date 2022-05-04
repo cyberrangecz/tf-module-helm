@@ -52,6 +52,9 @@ resource "helm_release" "kypo_postgres" {
   wait             = true
   values           = local.value_files_paths
   version          = var.kypo_postgres_version
+  depends_on = [
+    helm_release.longhorn
+  ]
 }
 
 resource "helm_release" "kypo_users" {

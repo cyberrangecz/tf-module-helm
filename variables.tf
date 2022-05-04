@@ -13,6 +13,12 @@ variable "application_credential_secret" {
   description = "Application credentials secret for accessing OpenStack project"
 }
 
+variable "deploy_longhorn" {
+  type        = bool
+  description = "Deploy Longhorn helm package"
+  default     = false
+}
+
 variable "gen_user_count" {
   type        = number
   description = "Number of local users to generate"
