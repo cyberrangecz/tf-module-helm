@@ -90,21 +90,6 @@ variable "kypo_postgres_version" {
   default     = "0.0.1"
 }
 
-variable "kubernetes_host" {
-  type        = string
-  description = "FQDN/IP address of Kubernetes API"
-}
-
-variable "kubernetes_client_certificate" {
-  type        = string
-  description = "Base64 encoded client certificate for authentication to Kubernetes API"
-}
-
-variable "kubernetes_client_key" {
-  type        = string
-  description = "Base64 encoded client key for authentication to Kubernetes API"
-}
-
 variable "os_auth_url" {
   type        = string
   description = "OpenStack authentication URL"

@@ -8,7 +8,6 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
-| <a name="provider_local"></a> [local](#provider\_local) | n/a |
 
 ## Modules
 
@@ -25,7 +24,6 @@ No modules.
 | [helm_release.kypo_users](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.longhorn](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.reloader](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
-| [local_file.kubectl_config](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 
 ## Inputs
 
@@ -42,9 +40,6 @@ No modules.
 | <a name="input_head_host"></a> [head\_host](#input\_head\_host) | FQDN/IP address of node/LB, where KYPO head services are running | `string` | n/a | yes |
 | <a name="input_head_ip"></a> [head\_ip](#input\_head\_ip) | IP address of node/LB, where KYPO head services are running | `string` | n/a | yes |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Repository with KYPO-head helm packages | `string` | `"https://gitlab.ics.muni.cz/api/v4/projects/2358/packages/helm/stable"` | no |
-| <a name="input_kubernetes_client_certificate"></a> [kubernetes\_client\_certificate](#input\_kubernetes\_client\_certificate) | Base64 encoded client certificate for authentication to Kubernetes API | `string` | n/a | yes |
-| <a name="input_kubernetes_client_key"></a> [kubernetes\_client\_key](#input\_kubernetes\_client\_key) | Base64 encoded client key for authentication to Kubernetes API | `string` | n/a | yes |
-| <a name="input_kubernetes_host"></a> [kubernetes\_host](#input\_kubernetes\_host) | FQDN/IP address of Kubernetes API | `string` | n/a | yes |
 | <a name="input_kypo_certs_version"></a> [kypo\_certs\_version](#input\_kypo\_certs\_version) | Version of kypo-certs helm package | `string` | `"0.0.1"` | no |
 | <a name="input_kypo_crp_head_version"></a> [kypo\_crp\_head\_version](#input\_kypo\_crp\_head\_version) | Version of kypo-crp-head helm package | `string` | `"0.0.2"` | no |
 | <a name="input_kypo_gen_users_version"></a> [kypo\_gen\_users\_version](#input\_kypo\_gen\_users\_version) | Version of kypo-gen-users helm package | `string` | `"0.0.1"` | no |
