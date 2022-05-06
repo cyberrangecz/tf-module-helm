@@ -143,7 +143,7 @@ resource "helm_release" "kypo_crp_head" {
     )
   ])
   create_namespace = true
-  wait             = true
+  atomic           = true
   timeout          = 1200
   depends_on = [
     helm_release.kypo_postgres,
