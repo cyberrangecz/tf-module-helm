@@ -25,7 +25,7 @@ resource "helm_release" "reloader" {
 resource "helm_release" "longhorn" {
   count            = var.deploy_longhorn ? 1 : 0
   name             = "longhorn"
-  namespace        = "longhorn"
+  namespace        = "longhorn-system"
   repository       = "https://charts.longhorn.io"
   chart            = "longhorn"
   create_namespace = true
