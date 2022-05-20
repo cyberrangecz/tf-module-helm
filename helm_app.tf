@@ -144,7 +144,7 @@ resource "helm_release" "kypo_crp_head" {
   ])
   create_namespace = true
   atomic           = true
-  timeout          = 1200
+  timeout          = 3600
   depends_on = [
     helm_release.kypo_postgres,
     helm_release.kypo_certs
