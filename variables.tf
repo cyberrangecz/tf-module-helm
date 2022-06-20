@@ -75,25 +75,25 @@ variable "helm_repository" {
 variable "kypo_certs_version" {
   type        = string
   description = "Version of kypo-certs helm package"
-  default     = "0.0.1"
+  default     = "1.0.0"
 }
 
 variable "kypo_crp_head_version" {
   type        = string
   description = "Version of kypo-crp-head helm package"
-  default     = "0.0.2"
+  default     = "1.0.0"
 }
 
 variable "kypo_gen_users_version" {
   type        = string
   description = "Version of kypo-gen-users helm package"
-  default     = "0.0.1"
+  default     = "1.0.0"
 }
 
 variable "kypo_postgres_version" {
   type        = string
   description = "Version of kypo-postgres helm package"
-  default     = "0.0.1"
+  default     = "1.0.0"
 }
 
 variable "os_auth_url" {
