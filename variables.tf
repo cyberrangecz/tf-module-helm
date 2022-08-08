@@ -109,6 +109,7 @@ variable "oidc_providers" {
     label            = string
     issuerIdentifier = string
     userInfoUrl      = string
+    responseType     = string
     }
   ))
   description = "List of OIDC providers. Set issuerIdentifier and userInfoUrl to empty string if not used."

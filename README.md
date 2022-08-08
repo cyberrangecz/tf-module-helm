@@ -41,11 +41,11 @@ No modules.
 | <a name="input_head_host"></a> [head\_host](#input\_head\_host) | FQDN/IP address of node/LB, where KYPO head services are running | `string` | n/a | yes |
 | <a name="input_head_ip"></a> [head\_ip](#input\_head\_ip) | IP address of node/LB, where KYPO head services are running | `string` | n/a | yes |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Repository with KYPO-head helm packages | `string` | `"https://gitlab.ics.muni.cz/api/v4/projects/2358/packages/helm/stable"` | no |
-| <a name="input_kypo_certs_version"></a> [kypo\_certs\_version](#input\_kypo\_certs\_version) | Version of kypo-certs helm package | `string` | `"0.0.1"` | no |
-| <a name="input_kypo_crp_head_version"></a> [kypo\_crp\_head\_version](#input\_kypo\_crp\_head\_version) | Version of kypo-crp-head helm package | `string` | `"0.0.2"` | no |
-| <a name="input_kypo_gen_users_version"></a> [kypo\_gen\_users\_version](#input\_kypo\_gen\_users\_version) | Version of kypo-gen-users helm package | `string` | `"0.0.1"` | no |
-| <a name="input_kypo_postgres_version"></a> [kypo\_postgres\_version](#input\_kypo\_postgres\_version) | Version of kypo-postgres helm package | `string` | `"0.0.1"` | no |
-| <a name="input_oidc_providers"></a> [oidc\_providers](#input\_oidc\_providers) | List of OIDC providers. Set issuerIdentifier and userInfoUrl to empty string if not used. | <pre>list(object({<br>    url              = string<br>    logoutUrl        = string<br>    clientId         = string<br>    label            = string<br>    issuerIdentifier = string<br>    userInfoUrl      = string<br>    }<br>  ))</pre> | n/a | yes |
+| <a name="input_kypo_certs_version"></a> [kypo\_certs\_version](#input\_kypo\_certs\_version) | Version of kypo-certs helm package | `string` | `"1.0.0"` | no |
+| <a name="input_kypo_crp_head_version"></a> [kypo\_crp\_head\_version](#input\_kypo\_crp\_head\_version) | Version of kypo-crp-head helm package | `string` | `"1.0.0"` | no |
+| <a name="input_kypo_gen_users_version"></a> [kypo\_gen\_users\_version](#input\_kypo\_gen\_users\_version) | Version of kypo-gen-users helm package | `string` | `"1.0.0"` | no |
+| <a name="input_kypo_postgres_version"></a> [kypo\_postgres\_version](#input\_kypo\_postgres\_version) | Version of kypo-postgres helm package | `string` | `"1.0.0"` | no |
+| <a name="input_oidc_providers"></a> [oidc\_providers](#input\_oidc\_providers) | List of OIDC providers. Set issuerIdentifier and userInfoUrl to empty string if not used. | <pre>list(object({<br>    url              = string<br>    logoutUrl        = string<br>    clientId         = string<br>    label            = string<br>    issuerIdentifier = string<br>    userInfoUrl      = string<br>    responseType     = string<br>    }<br>  ))</pre> | n/a | yes |
 | <a name="input_os_auth_url"></a> [os\_auth\_url](#input\_os\_auth\_url) | OpenStack authentication URL | `string` | n/a | yes |
 | <a name="input_proxy_host"></a> [proxy\_host](#input\_proxy\_host) | FQDN/IP address of proxy-jump host | `string` | n/a | yes |
 | <a name="input_proxy_key"></a> [proxy\_key](#input\_proxy\_key) | Base64 encoded proxy-jump ssh private key | `string` | n/a | yes |
