@@ -137,6 +137,12 @@ variable "proxy_user" {
   default     = "ubuntu"
 }
 
+variable "sandbox_ansible_timeout" {
+  type        = number
+  description = "Timeout for sandbox provisioning stage"
+  default     = 7200
+}
+
 variable "tls_private_key" {
   type        = string
   description = "Base64 encoded tls private key. If not specified, it will be generated."

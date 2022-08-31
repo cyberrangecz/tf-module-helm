@@ -133,6 +133,10 @@ resource "helm_release" "kypo_crp_head" {
     name  = "sandbox.proxyUser"
     value = var.proxy_user
   }
+  set {
+    name  = "sandbox.sandboxAnsibleTimeout"
+    value = var.sandbox_ansible_timeout
+  }
   values = concat(local.value_files_paths, [
     jsonencode(
       {
