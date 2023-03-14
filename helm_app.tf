@@ -110,6 +110,10 @@ resource "helm_release" "kypo_crp_head" {
     value = var.man_flavor
   }
   set {
+    name  = "sandbox.manImage"
+    value = var.man_image
+  }
+  set {
     name  = "sandbox.osApplicationCredentialId"
     value = var.application_credential_id
   }
