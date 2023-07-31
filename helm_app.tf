@@ -147,6 +147,7 @@ resource "helm_release" "kypo_crp_head" {
         global = {
           users         = local.users,
           oidcProviders = var.oidc_providers,
+          corsWhitelist = var.cors_whitelist,
         }
         sandbox = {
           gitConfig = var.git_config

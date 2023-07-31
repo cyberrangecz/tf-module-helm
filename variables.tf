@@ -13,6 +13,12 @@ variable "application_credential_secret" {
   description = "Application credentials secret for accessing OpenStack project"
 }
 
+variable "cors_whitelist" {
+  type        = list(string)
+  description = "A list of origins that are authorized to make cross-site HTTP requests"
+  default     = []
+}
+
 variable "deploy_head_timeout" {
   type        = number
   description = "Timeout for deploying kypo-crp-head helm package in seconds"
