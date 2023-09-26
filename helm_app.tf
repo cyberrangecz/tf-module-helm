@@ -76,6 +76,19 @@ resource "helm_release" "kypo_users" {
   }
 }
 
+resource "helm_release" "keycloak_operator" {
+  name             = "keycloak-operator"
+  namespace        = "kypo"
+  chart            = "${path.module}/helm/keycloak-operator"
+  create_namespace = true
+  wait             = true
+}
+
+resource "random_password" "keycloak_password" {
+  length  = 20
+  special = false
+}
+
 resource "helm_release" "kypo_crp_head" {
   name       = "kypo-crp-head"
   namespace  = "kypo"
@@ -99,6 +112,11 @@ resource "helm_release" "kypo_crp_head" {
   set {
     name  = "kypo-guacamole.guacamole.guacamoleAdminPassword"
     value = var.guacamole_admin_password
+  }
+
+  set {
+    name  = "kypo-keycloak.keycloakPassword"
+    value = random_password.keycloak_password.result
   }
 
   set {
@@ -160,6 +178,7 @@ resource "helm_release" "kypo_crp_head" {
   timeout          = var.deploy_head_timeout
   depends_on = [
     helm_release.kypo_postgres,
-    helm_release.kypo_certs
+    helm_release.kypo_certs,
+    helm_release.keycloak_operator
   ]
 }
