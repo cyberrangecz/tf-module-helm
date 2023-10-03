@@ -11,6 +11,7 @@ variable "application_credential_id" {
 variable "application_credential_secret" {
   type        = string
   description = "Application credentials secret for accessing OpenStack project"
+  sensitive   = true
 }
 
 variable "cors_whitelist" {
@@ -50,16 +51,26 @@ variable "git_config" {
     }
   )
   description = "Git configuration for KYPO. For internal GIT, set privateKey to empty string."
+  sensitive   = true
+}
+
+variable "grafana_client_secret" {
+  type        = string
+  description = "Grafana OIDC client secret"
+  default     = ""
+  sensitive   = true
 }
 
 variable "guacamole_admin_password" {
   type        = string
   description = "Password of guacamole admin user"
+  sensitive   = true
 }
 
 variable "guacamole_user_password" {
   type        = string
   description = "Password of guacamole non-admin user"
+  sensitive   = true
 }
 
 variable "head_host" {
@@ -142,6 +153,7 @@ variable "proxy_host" {
 variable "proxy_key" {
   type        = string
   description = "Base64 encoded proxy-jump ssh private key"
+  sensitive   = true
 }
 
 variable "proxy_user" {
@@ -160,6 +172,7 @@ variable "tls_private_key" {
   type        = string
   description = "Base64 encoded tls private key. If not specified, it will be generated."
   default     = ""
+  sensitive   = true
 }
 
 variable "tls_public_key" {
@@ -181,6 +194,7 @@ variable "users" {
       }
   ))
   description = "Dictionary with with users, that should be created in KYPO. For users from external OIDC providers, set password to empty string."
+  sensitive   = true
 }
 
 variable "value_files" {

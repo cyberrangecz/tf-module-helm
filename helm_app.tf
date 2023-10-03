@@ -115,6 +115,11 @@ resource "helm_release" "kypo_crp_head" {
   }
 
   set {
+    name  = "kypo-keycloak.grafanaClientSecret"
+    value = var.grafana_client_secret
+  }
+
+  set {
     name  = "kypo-keycloak.keycloakPassword"
     value = random_password.keycloak_password.result
   }
