@@ -1,3 +1,4 @@
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 No requirements.
@@ -67,3 +68,4 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_keycloak_password"></a> [keycloak\_password](#output\_keycloak\_password) | Password for Keycloak admin users |
+<!-- END_TF_DOCS -->

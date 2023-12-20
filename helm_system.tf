@@ -18,6 +18,7 @@ resource "helm_release" "reloader" {
   namespace        = "reloader"
   repository       = "https://stakater.github.io/stakater-charts"
   chart            = "reloader"
+  version          = "1.0.54"
   create_namespace = true
   wait             = true
 }
