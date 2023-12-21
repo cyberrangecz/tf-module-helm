@@ -1,16 +1,17 @@
 locals {
   users = [
     for key, value in var.users : {
-      sub        = key
-      iss        = var.users[key].iss
-      password   = try(var.users[key].password, "")
-      email      = var.users[key].email
-      fullName   = var.users[key].fullName
-      givenName  = var.users[key].givenName
-      familyName = var.users[key].familyName
-      admin      = var.users[key].admin
+      iss              = var.users[key].iss
+      email            = var.users[key].email
+      fullName         = var.users[key].fullName
+      givenName        = var.users[key].givenName
+      familyName       = var.users[key].familyName
+      admin            = var.users[key].admin
+      keycloakUsername = var.users[key].keycloakUsername
+      keycloakPassword = var.users[key].keycloakPassword
     }
   ]
+
   value_files_paths = [for value_file in var.value_files : file(value_file)]
 }
 
