@@ -165,6 +165,22 @@ resource "helm_release" "kypo_crp_head" {
     name  = "sandbox.sandboxAnsibleTimeout"
     value = var.sandbox_ansible_timeout
   }
+  set {
+    name  = "sandbox.smtpServer"
+    value = var.smtp_config.smtp_server
+  }
+  set {
+    name  = "sandbox.smtpPort"
+    value = var.smtp_config.smtp_port
+  }
+  set {
+    name  = "sandbox.senderEmail"
+    value = var.smtp_config.sender_email
+  }
+  set {
+    name  = "sandbox.senderEmailPassword"
+    value = var.smtp_config.sender_email_password
+  }
   values = concat(local.value_files_paths, [
     jsonencode(
       {

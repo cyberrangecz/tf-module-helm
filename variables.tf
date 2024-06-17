@@ -39,19 +39,20 @@ variable "gen_user_count" {
 
 variable "git_config" {
   type = object({
-    type                 = string
-    server               = string
-    sshPort              = number
-    restServerUrl        = string
+    providers            = map(string)
     user                 = string
-    privateKey           = string
-    accessToken          = string
     ansibleNetworkingUrl = string
     ansibleNetworkingRev = string
     }
   )
-  description = "Git configuration for KYPO. For internal GIT, set privateKey to empty string."
+  description = "Git configuration for KYPO."
   sensitive   = true
+  default = {
+    providers            = {}
+    user                 = "git"
+    ansibleNetworkingUrl = "https://gitlab.ics.muni.cz/muni-kypo-crp/backend-python/ansible-networking-stage/kypo-ansible-stage-one.git"
+    ansibleNetworkingRev = "v1.0.18"
+  }
 }
 
 variable "grafana_client_secret" {
@@ -166,6 +167,24 @@ variable "sandbox_ansible_timeout" {
   type        = number
   description = "Timeout for sandbox provisioning stage"
   default     = 7200
+}
+
+variable "smtp_config" {
+  type = object({
+    smtp_server           = string
+    smtp_port             = number
+    sender_email          = string
+    sender_email_password = string
+    }
+  )
+  description = "SMTP configuration for Sandbox Service notificatins"
+  sensitive   = true
+  default = {
+    smtp_server           = ""
+    smtp_port             = 25
+    sender_email          = ""
+    sender_email_password = ""
+  }
 }
 
 variable "tls_private_key" {
