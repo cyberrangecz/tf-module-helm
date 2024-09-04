@@ -174,6 +174,10 @@ resource "helm_release" "kypo_crp_head" {
     value = var.smtp_config.smtp_port
   }
   set {
+    name  = "sandbox.smtpEncryption"
+    value = var.smtp_config.smtp_encryption
+  }
+  set {
     name  = "sandbox.senderEmail"
     value = var.smtp_config.sender_email
   }
