@@ -3,7 +3,7 @@ resource "helm_release" "cert_manager" {
   namespace        = "cert-manager"
   repository       = "https://charts.jetstack.io"
   chart            = "cert-manager"
-  version          = "v1.7.1"
+  version          = "v1.16.2"
   create_namespace = true
   wait             = true
 
@@ -18,7 +18,7 @@ resource "helm_release" "reloader" {
   namespace        = "reloader"
   repository       = "https://stakater.github.io/stakater-charts"
   chart            = "reloader"
-  version          = "1.0.54"
+  version          = "1.2.0"
   create_namespace = true
   wait             = true
 }

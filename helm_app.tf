@@ -15,13 +15,13 @@ locals {
   value_files_paths = [for value_file in var.value_files : file(value_file)]
 }
 
-resource "helm_release" "kypo_certs" {
-  name             = "kypo-certs"
-  namespace        = "kypo"
+resource "helm_release" "certs" {
+  name             = "certs"
+  namespace        = "crczp"
   repository       = var.helm_repository
-  chart            = "kypo-certs"
+  chart            = "crczp-certs"
   create_namespace = true
-  version          = var.kypo_certs_version
+  version          = var.certs_version
 
   set {
     name  = "global.headHost"
@@ -39,33 +39,37 @@ resource "helm_release" "kypo_certs" {
     name  = "global.tlsPublicKey"
     value = var.tls_public_key
   }
+  set {
+    name  = "selfSigned"
+    value = var.self_signed
+  }
   depends_on = [
     helm_release.cert_manager
   ]
 }
 
-resource "helm_release" "kypo_postgres" {
-  name             = "kypo-postgres"
-  namespace        = "kypo"
+resource "helm_release" "postgres" {
+  name             = "postgres"
+  namespace        = "crczp"
   repository       = var.helm_repository
-  chart            = "kypo-postgres"
+  chart            = "crczp-postgres"
   create_namespace = true
   wait             = true
   values           = local.value_files_paths
-  version          = var.kypo_postgres_version
+  version          = var.postgres_version
   depends_on = [
     helm_release.longhorn
   ]
 }
 
-resource "helm_release" "kypo_users" {
-  name             = "kypo-gen-users"
-  namespace        = "kypo"
+resource "helm_release" "users" {
+  name             = "gen-users"
+  namespace        = "crczp"
   repository       = var.helm_repository
-  chart            = "kypo-gen-users"
+  chart            = "crczp-gen-users"
   create_namespace = true
   wait             = true
-  version          = var.kypo_gen_users_version
+  version          = var.gen_users_version
 
   set {
     name  = "global.headHost"
@@ -79,7 +83,7 @@ resource "helm_release" "kypo_users" {
 
 resource "helm_release" "keycloak_operator" {
   name             = "keycloak-operator"
-  namespace        = "kypo"
+  namespace        = "crczp"
   chart            = "${path.module}/helm/keycloak-operator"
   create_namespace = true
   wait             = true
@@ -90,12 +94,30 @@ resource "random_password" "keycloak_password" {
   special = false
 }
 
-resource "helm_release" "kypo_crp_head" {
-  name       = "kypo-crp-head"
-  namespace  = "kypo"
+resource "random_password" "guacamole_user_password" {
+  length  = 20
+  special = false
+}
+
+resource "random_password" "guacamole_admin_password" {
+  length  = 20
+  special = false
+}
+
+resource "random_string" "django_secret_key" {
+  length  = 50
+  special = true
+  upper   = true
+  lower   = true
+  numeric = true
+}
+
+resource "helm_release" "head" {
+  name       = "head"
+  namespace  = "crczp"
   repository = var.helm_repository
-  chart      = "kypo-crp-head"
-  version    = var.kypo_crp_head_version
+  chart      = "crczp-head"
+  version    = var.head_version
 
   set {
     name  = "global.acmeContact"
@@ -103,7 +125,7 @@ resource "helm_release" "kypo_crp_head" {
   }
   set {
     name  = "global.guacamoleUserPassword"
-    value = var.guacamole_user_password
+    value = random_password.guacamole_user_password.result
   }
   set {
     name  = "global.headHost"
@@ -111,23 +133,27 @@ resource "helm_release" "kypo_crp_head" {
   }
 
   set {
-    name  = "kypo-guacamole.guacamole.guacamoleAdminPassword"
-    value = var.guacamole_admin_password
+    name  = "crczp-guacamole.guacamole.guacamoleAdminPassword"
+    value = random_password.guacamole_admin_password.result
   }
 
   set {
-    name  = "kypo-keycloak.grafanaClientSecret"
+    name  = "crczp-keycloak.grafanaClientSecret"
     value = var.grafana_client_secret
   }
 
   set {
-    name  = "kypo-keycloak.keycloakPassword"
+    name  = "crczp-keycloak.keycloakPassword"
     value = random_password.keycloak_password.result
   }
 
   set {
-    name  = "sandbox.kypoHeadIp"
-    value = var.head_ip
+    name  = "sandbox.djangoSecretKey"
+    value = random_string.django_secret_key.result
+  }
+  set {
+    name  = "crczp-syslog.awsSgId"
+    value = var.aws_config.eksSgId != "" ? var.aws_config.eksSgId : ""
   }
   set {
     name  = "sandbox.manFlavor"
@@ -195,6 +221,7 @@ resource "helm_release" "kypo_crp_head" {
         }
         sandbox = {
           gitConfig = var.git_config
+          aws       = var.aws_config
         }
       }
     )
@@ -203,8 +230,8 @@ resource "helm_release" "kypo_crp_head" {
   atomic           = true
   timeout          = var.deploy_head_timeout
   depends_on = [
-    helm_release.kypo_postgres,
-    helm_release.kypo_certs,
+    helm_release.postgres,
+    helm_release.certs,
     helm_release.keycloak_operator
   ]
 }
