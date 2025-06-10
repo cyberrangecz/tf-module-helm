@@ -180,6 +180,10 @@ resource "helm_release" "head" {
     value = var.proxy_host
   }
   set {
+    name  = "sandbox.proxyPort"
+    value = var.proxy_port
+  }
+  set {
     name  = "sandbox.proxyKey"
     value = var.proxy_key
   }

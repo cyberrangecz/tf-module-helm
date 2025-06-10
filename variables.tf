@@ -161,6 +161,12 @@ variable "proxy_host" {
   description = "FQDN/IP address of proxy jump host"
 }
 
+variable "proxy_port" {
+  type        = string
+  description = "SSH Port of proxy jump host"
+  default     = "22"
+}
+
 variable "proxy_key" {
   type        = string
   description = "Base64 encoded proxy jump ssh private key"

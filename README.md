@@ -57,6 +57,7 @@ No modules.
 | <a name="input_postgres_version"></a> [postgres\_version](#input\_postgres\_version) | Version of postgres helm package | `string` | `"1.0.0"` | no |
 | <a name="input_proxy_host"></a> [proxy\_host](#input\_proxy\_host) | FQDN/IP address of proxy jump host | `string` | n/a | yes |
 | <a name="input_proxy_key"></a> [proxy\_key](#input\_proxy\_key) | Base64 encoded proxy jump ssh private key | `string` | n/a | yes |
+| <a name="input_proxy_port"></a> [proxy\_port](#input\_proxy\_port) | SSH Port of proxy jump host | `string` | `"22"` | no |
 | <a name="input_proxy_user"></a> [proxy\_user](#input\_proxy\_user) | Username to access proxy jump instance | `string` | `"ubuntu"` | no |
 | <a name="input_sandbox_ansible_timeout"></a> [sandbox\_ansible\_timeout](#input\_sandbox\_ansible\_timeout) | Timeout for sandbox provisioning stage | `number` | `7200` | no |
 | <a name="input_self_signed"></a> [self\_signed](#input\_self\_signed) | Use selfsigned certificates instead of Let's Encrypt for fqdn | `bool` | `false` | no |
