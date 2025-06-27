@@ -48,20 +48,6 @@ resource "helm_release" "certs" {
   ]
 }
 
-resource "helm_release" "postgres" {
-  name             = "postgres"
-  namespace        = "crczp"
-  repository       = var.helm_repository
-  chart            = "crczp-postgres"
-  create_namespace = true
-  wait             = true
-  values           = local.value_files_paths
-  version          = var.postgres_version
-  depends_on = [
-    helm_release.longhorn
-  ]
-}
-
 resource "helm_release" "users" {
   name             = "gen-users"
   namespace        = "crczp"
@@ -104,6 +90,11 @@ resource "random_password" "guacamole_admin_password" {
   special = false
 }
 
+resource "random_password" "postgres_superadmin_password" {
+  length  = 20
+  special = false
+}
+
 resource "random_string" "django_secret_key" {
   length  = 50
   special = true
@@ -130,6 +121,10 @@ resource "helm_release" "head" {
   set {
     name  = "global.headHost"
     value = var.head_host
+  }
+  set {
+    name  = "global.postgres.password"
+    value = random_password.postgres_superadmin_password.result
   }
 
   set {

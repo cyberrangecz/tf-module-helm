@@ -32,3 +32,35 @@ resource "helm_release" "longhorn" {
   create_namespace = true
   wait             = true
 }
+
+resource "helm_release" "cnpg" {
+  name       = "cnpg"
+  namespace  = "cnpg-system"
+  repository = "https://cloudnative-pg.github.io/charts"
+  chart      = "cloudnative-pg"
+  version    = "0.24.0"
+
+  create_namespace = true
+
+  set {
+    name  = "config.clusterWide"
+    value = "false"
+  }
+}
+
+resource "helm_release" "postgres" {
+  name       = "postgres"
+  namespace  = "cnpg-system"
+  repository = var.helm_repository
+  chart      = "crczp-postgres"
+  values     = [file("value-files/${terraform.workspace}-postgres.yaml")]
+
+  set {
+    name  = "cluster.superuserPassword"
+    value = random_password.postgres_superadmin_password.result
+  }
+
+  depends_on = [
+    helm_release.cnpg
+  ]
+}
