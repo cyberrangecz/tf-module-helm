@@ -95,6 +95,11 @@ resource "random_password" "postgres_superadmin_password" {
   special = false
 }
 
+resource "random_password" "django_superadmin_password" {
+  length  = 20
+  special = false
+}
+
 resource "random_string" "django_secret_key" {
   length  = 50
   special = true
@@ -145,6 +150,10 @@ resource "helm_release" "head" {
   set {
     name  = "sandbox.djangoSecretKey"
     value = random_string.django_secret_key.result
+  }
+  set {
+    name  = "sandbox.environments.DJANGO_ADMIN_PASSWORD"
+    value = random_password.django_superadmin_password.result
   }
   set {
     name  = "crczp-syslog.awsSgId"
