@@ -102,7 +102,7 @@ resource "random_password" "django_superadmin_password" {
 
 resource "random_string" "django_secret_key" {
   length  = 50
-  special = true
+  special = false
   upper   = true
   lower   = true
   numeric = true
