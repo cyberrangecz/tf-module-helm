@@ -7,10 +7,10 @@ resource "helm_release" "cert_manager" {
   create_namespace = true
   wait             = true
 
-  set {
+  set = [{
     name  = "installCRDs"
     value = "true"
-  }
+  }]
 }
 
 resource "helm_release" "reloader" {
@@ -42,10 +42,10 @@ resource "helm_release" "cnpg" {
 
   create_namespace = true
 
-  set {
+  set = [{
     name  = "config.clusterWide"
     value = "false"
-  }
+  }]
 }
 
 resource "helm_release" "postgres" {
@@ -55,10 +55,10 @@ resource "helm_release" "postgres" {
   chart      = "crczp-postgres"
   values     = [file("value-files/${terraform.workspace}-postgres.yaml")]
 
-  set {
+  set = [{
     name  = "cluster.superuserPassword"
     value = random_password.postgres_superadmin_password.result
-  }
+  }]
 
   depends_on = [
     helm_release.cnpg
