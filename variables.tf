@@ -123,18 +123,6 @@ variable "postgres_version" {
   default     = "1.0.0"
 }
 
-variable "man_flavor" {
-  type        = string
-  description = "Flavor name used for man nodes"
-  default     = "standard.small"
-}
-
-variable "man_image" {
-  type        = string
-  description = "OpenStack image used for man nodes"
-  default     = "ubuntu-noble-x86_64"
-}
-
 variable "os_auth_url" {
   type        = string
   description = "OpenStack authentication URL (mutually exclusive with aws parameter)"
@@ -183,12 +171,6 @@ variable "proxy_user" {
   type        = string
   description = "Username to access proxy jump instance"
   default     = "ubuntu"
-}
-
-variable "sandbox_ansible_timeout" {
-  type        = number
-  description = "Timeout for sandbox provisioning stage"
-  default     = 7200
 }
 
 variable "self_signed" {

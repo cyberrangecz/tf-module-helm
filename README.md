@@ -7,8 +7,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 3.1.1 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.8.1 |
 
 ## Modules
 
@@ -53,8 +53,6 @@ No modules.
 | <a name="input_head_host"></a> [head\_host](#input\_head\_host) | FQDN/IP address of node/LB, where head services are running | `string` | n/a | yes |
 | <a name="input_head_version"></a> [head\_version](#input\_head\_version) | Version of head helm package | `string` | `"1.0.0"` | no |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Repository with head helm packages | `string` | `"oci://ghcr.io/cyberrangecz/stable"` | no |
-| <a name="input_man_flavor"></a> [man\_flavor](#input\_man\_flavor) | Flavor name used for man nodes | `string` | `"standard.small"` | no |
-| <a name="input_man_image"></a> [man\_image](#input\_man\_image) | OpenStack image used for man nodes | `string` | `"ubuntu-noble-x86_64"` | no |
 | <a name="input_oidc_providers"></a> [oidc\_providers](#input\_oidc\_providers) | List of OIDC providers. Set issuerIdentifier and userInfoUrl to empty string if not used. | <pre>list(object({<br/>    url              = string<br/>    logoutUrl        = string<br/>    clientId         = string<br/>    label            = string<br/>    issuerIdentifier = string<br/>    userInfoUrl      = string<br/>    responseType     = string<br/>    refreshToken     = optional(bool)<br/>    }<br/>  ))</pre> | n/a | yes |
 | <a name="input_os_auth_url"></a> [os\_auth\_url](#input\_os\_auth\_url) | OpenStack authentication URL (mutually exclusive with aws parameter) | `string` | `""` | no |
 | <a name="input_postgres_value_file"></a> [postgres\_value\_file](#input\_postgres\_value\_file) | File containing Helm values for postgres helm chart | `string` | `"values-postgres.yaml"` | no |
@@ -63,7 +61,6 @@ No modules.
 | <a name="input_proxy_key"></a> [proxy\_key](#input\_proxy\_key) | Base64 encoded proxy jump ssh private key | `string` | n/a | yes |
 | <a name="input_proxy_port"></a> [proxy\_port](#input\_proxy\_port) | SSH Port of proxy jump host | `string` | `"22"` | no |
 | <a name="input_proxy_user"></a> [proxy\_user](#input\_proxy\_user) | Username to access proxy jump instance | `string` | `"ubuntu"` | no |
-| <a name="input_sandbox_ansible_timeout"></a> [sandbox\_ansible\_timeout](#input\_sandbox\_ansible\_timeout) | Timeout for sandbox provisioning stage | `number` | `7200` | no |
 | <a name="input_self_signed"></a> [self\_signed](#input\_self\_signed) | Use selfsigned certificates instead of Let's Encrypt for fqdn | `bool` | `false` | no |
 | <a name="input_smtp_config"></a> [smtp\_config](#input\_smtp\_config) | SMTP configuration for Sandbox Service notificatins | <pre>object({<br/>    smtp_server           = string<br/>    smtp_port             = number<br/>    smtp_encryption       = string<br/>    sender_email          = string<br/>    sender_email_password = string<br/>    }<br/>  )</pre> | <pre>{<br/>  "sender_email": "",<br/>  "sender_email_password": "",<br/>  "smtp_encryption": "",<br/>  "smtp_port": 25,<br/>  "smtp_server": ""<br/>}</pre> | no |
 | <a name="input_tls_private_key"></a> [tls\_private\_key](#input\_tls\_private\_key) | Base64 encoded tls private key. If not specified, it will be generated. | `string` | `""` | no |

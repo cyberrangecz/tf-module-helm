@@ -115,117 +115,50 @@ resource "helm_release" "head" {
   chart      = "crczp-head"
   version    = var.head_version
 
-  set = [{
-    name  = "global.acmeContact"
-    value = var.acme_contact
-    },
-    {
-      name  = "global.guacamoleUserPassword"
-      value = random_password.guacamole_user_password.result
-    },
-    {
-      name  = "global.headHost"
-      value = var.head_host
-    },
-    {
-      name  = "global.postgres.password"
-      value = random_password.postgres_superadmin_password.result
-    },
-    {
-      name  = "crczp-guacamole.guacamole.guacamoleAdminPassword"
-      value = random_password.guacamole_admin_password.result
-    },
-    {
-      name  = "crczp-keycloak.grafanaClientSecret"
-      value = var.grafana_client_secret
-    },
-    {
-      name  = "crczp-keycloak.keycloakPassword"
-      value = random_password.keycloak_password.result
-    },
-    {
-      name  = "sandbox.djangoSecretKey"
-      value = random_string.django_secret_key.result
-    },
-    {
-      name  = "sandbox.environments.DJANGO_ADMIN_PASSWORD"
-      value = random_password.django_superadmin_password.result
-    },
-    {
-      name  = "crczp-syslog.awsSgId"
-      value = var.aws_config.eksSgId != "" ? var.aws_config.eksSgId : ""
-    },
-    {
-      name  = "sandbox.manFlavor"
-      value = var.man_flavor
-    },
-    {
-      name  = "sandbox.manImage"
-      value = var.man_image
-    },
-    {
-      name  = "sandbox.osApplicationCredentialId"
-      value = var.application_credential_id
-    },
-    {
-      name  = "sandbox.osApplicationCredentialSecret"
-      value = var.application_credential_secret
-    },
-    {
-      name  = "sandbox.osAuthUrl"
-      value = var.os_auth_url
-    },
-    {
-      name  = "sandbox.proxyHost"
-      value = var.proxy_host
-    },
-    {
-      name  = "sandbox.proxyPort"
-      value = var.proxy_port
-    },
-    {
-      name  = "sandbox.proxyKey"
-      value = var.proxy_key
-    },
-    {
-      name  = "sandbox.proxyUser"
-      value = var.proxy_user
-    },
-    {
-      name  = "sandbox.sandboxAnsibleTimeout"
-      value = var.sandbox_ansible_timeout
-    },
-    {
-      name  = "sandbox.smtpServer"
-      value = var.smtp_config.smtp_server
-    },
-    {
-      name  = "sandbox.smtpPort"
-      value = var.smtp_config.smtp_port
-    },
-    {
-      name  = "sandbox.smtpEncryption"
-      value = var.smtp_config.smtp_encryption
-    },
-    {
-      name  = "sandbox.senderEmail"
-      value = var.smtp_config.sender_email
-    },
-    {
-      name  = "sandbox.senderEmailPassword"
-      value = var.smtp_config.sender_email_password
-  }]
   values = concat(local.value_files_paths, [
     jsonencode(
       {
         global = {
-          users         = local.users,
-          oidcProviders = var.oidc_providers,
-          corsWhitelist = var.cors_whitelist,
+          corsWhitelist         = var.cors_whitelist
+          guacamoleUserPassword = random_password.guacamole_user_password.result
+          headHost              = var.head_host
+          oidcProviders         = var.oidc_providers
+          postgres = {
+            password = random_password.postgres_superadmin_password.result
+          }
+          users = local.users
+        }
+        crczp-guacamole = {
+          guacamole = {
+            guacamoleAdminPassword = random_password.guacamole_admin_password.result
+          }
+        }
+        crczp-keycloak = {
+          grafanaClientSecret = var.grafana_client_secret
+          keycloakPassword    = random_password.keycloak_password.result
+        }
+        crczp-syslog = {
+          awsSgId = var.aws_config.eksSgId != "" ? var.aws_config.eksSgId : ""
         }
         sandbox = {
-          gitConfig = var.git_config
-          aws       = var.aws_config
+          gitConfig       = var.git_config
+          aws             = var.aws_config
+          djangoSecretKey = random_string.django_secret_key.result
+          environments = {
+            DJANGO_ADMIN_PASSWORD = random_password.django_superadmin_password.result
+          }
+          osApplicationCredentialId     = var.application_credential_id
+          osApplicationCredentialSecret = var.application_credential_secret
+          osAuthUrl                     = var.os_auth_url
+          proxyHost                     = var.proxy_host
+          proxyKey                      = var.proxy_key
+          proxyPort                     = var.proxy_port
+          proxyUser                     = var.proxy_user
+          senderEmail                   = var.smtp_config.sender_email
+          senderEmailPassword           = var.smtp_config.sender_email_password
+          smtpEncryption                = var.smtp_config.smtp_encryption
+          smtpPort                      = var.smtp_config.smtp_port
+          smtpServer                    = var.smtp_config.smtp_server
         }
       }
     )
