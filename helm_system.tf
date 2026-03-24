@@ -48,6 +48,18 @@ resource "helm_release" "cnpg" {
   }]
 }
 
+resource "helm_release" "opensearch" {
+  name       = "opensearch"
+  namespace  = "opensearch"
+  repository = "https://opensearch-project.github.io/helm-charts"
+  chart      = "opensearch"
+  version    = "3.5.0"
+
+  create_namespace = true
+
+  values = [file("${path.module}/values-opensearch.yaml")]
+}
+
 resource "helm_release" "postgres" {
   name       = "postgres"
   namespace  = "cnpg-system"
