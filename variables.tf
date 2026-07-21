@@ -69,6 +69,7 @@ variable "git_config" {
     user                 = string
     ansibleNetworkingUrl = string
     ansibleNetworkingRev = string
+    topologyCacheMode    = optional(string, "AGGRESSIVE")
     }
   )
   description = "Git configuration"

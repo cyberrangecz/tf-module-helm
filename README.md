@@ -6,9 +6,9 @@ No requirements.
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | 3.1.1 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.8.1 |
+| ---- | ------- |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -17,7 +17,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [helm_release.cert_manager](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.certs](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.cnpg](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
@@ -37,7 +37,7 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_acme_contact"></a> [acme\_contact](#input\_acme\_contact) | Let's encrypt contact email address | `string` | n/a | yes |
 | <a name="input_application_credential_id"></a> [application\_credential\_id](#input\_application\_credential\_id) | Application credentials ID for accessing OpenStack project (mutually exclusive with aws parameter) | `string` | `""` | no |
 | <a name="input_application_credential_secret"></a> [application\_credential\_secret](#input\_application\_credential\_secret) | Application credentials secret for accessing OpenStack project (mutually exclusive with aws parameter) | `string` | `""` | no |
@@ -48,7 +48,7 @@ No modules.
 | <a name="input_deploy_longhorn"></a> [deploy\_longhorn](#input\_deploy\_longhorn) | Deploy Longhorn helm package | `bool` | `false` | no |
 | <a name="input_gen_user_count"></a> [gen\_user\_count](#input\_gen\_user\_count) | Number of local users to generate | `number` | n/a | yes |
 | <a name="input_gen_users_version"></a> [gen\_users\_version](#input\_gen\_users\_version) | Version of gen-users helm package | `string` | `"1.0.0"` | no |
-| <a name="input_git_config"></a> [git\_config](#input\_git\_config) | Git configuration | <pre>object({<br/>    providers            = map(string)<br/>    user                 = string<br/>    ansibleNetworkingUrl = string<br/>    ansibleNetworkingRev = string<br/>    }<br/>  )</pre> | <pre>{<br/>  "ansibleNetworkingRev": "v1.0.18",<br/>  "ansibleNetworkingUrl": "https://github.com/cyberrangecz/ansible-stage-one.git",<br/>  "providers": {},<br/>  "user": "git"<br/>}</pre> | no |
+| <a name="input_git_config"></a> [git\_config](#input\_git\_config) | Git configuration | <pre>object({<br/>    providers            = map(string)<br/>    user                 = string<br/>    ansibleNetworkingUrl = string<br/>    ansibleNetworkingRev = string<br/>    topologyCacheMode    = optional(string, "AGGRESSIVE")<br/>    }<br/>  )</pre> | <pre>{<br/>  "ansibleNetworkingRev": "v1.0.18",<br/>  "ansibleNetworkingUrl": "https://github.com/cyberrangecz/ansible-stage-one.git",<br/>  "providers": {},<br/>  "user": "git"<br/>}</pre> | no |
 | <a name="input_grafana_client_secret"></a> [grafana\_client\_secret](#input\_grafana\_client\_secret) | Grafana OIDC client secret | `string` | `""` | no |
 | <a name="input_head_host"></a> [head\_host](#input\_head\_host) | FQDN/IP address of node/LB, where head services are running | `string` | n/a | yes |
 | <a name="input_head_version"></a> [head\_version](#input\_head\_version) | Version of head helm package | `string` | `"1.0.0"` | no |
@@ -71,6 +71,6 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_keycloak_password"></a> [keycloak\_password](#output\_keycloak\_password) | Password for Keycloak admin users |
 <!-- END_TF_DOCS -->
