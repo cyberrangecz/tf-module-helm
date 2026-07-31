@@ -169,6 +169,7 @@ resource "helm_release" "head" {
   depends_on = [
     helm_release.postgres,
     helm_release.certs,
-    helm_release.keycloak_operator
+    helm_release.keycloak_operator,
+    helm_release.opensearch
   ]
 }
