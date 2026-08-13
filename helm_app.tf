@@ -108,6 +108,14 @@ resource "random_string" "django_secret_key" {
   numeric = true
 }
 
+resource "random_string" "django_secret_key_mitre" {
+  length  = 50
+  special = false
+  upper   = true
+  lower   = true
+  numeric = true
+}
+
 resource "helm_release" "head" {
   name       = "head"
   namespace  = "crczp"
@@ -139,6 +147,9 @@ resource "helm_release" "head" {
         }
         crczp-syslog = {
           awsSgId = var.aws_config.eksSgId != "" ? var.aws_config.eksSgId : ""
+        }
+        mitre = {
+          djangoSecretKey = random_string.django_secret_key_mitre.result
         }
         sandbox = {
           gitConfig       = var.git_config
