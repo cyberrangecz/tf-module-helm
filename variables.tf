@@ -180,6 +180,12 @@ variable "self_signed" {
   default     = false
 }
 
+variable "netbird_client_management_url" {
+  type        = string
+  description = "Public URL of the NetBird management server baked into sandbox VMs. Empty disables the sandbox NetBird integration."
+  default     = ""
+}
+
 variable "smtp_config" {
   type = object({
     smtp_server           = string

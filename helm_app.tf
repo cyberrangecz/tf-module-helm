@@ -155,6 +155,9 @@ resource "helm_release" "head" {
           gitConfig       = var.git_config
           aws             = var.aws_config
           djangoSecretKey = random_string.django_secret_key.result
+          netbird = {
+            clientManagementUrl = var.netbird_client_management_url
+          }
           environments = {
             DJANGO_ADMIN_PASSWORD = random_password.django_superadmin_password.result
           }
