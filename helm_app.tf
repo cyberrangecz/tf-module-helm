@@ -161,18 +161,16 @@ resource "helm_release" "head" {
           environments = {
             DJANGO_ADMIN_PASSWORD = random_password.django_superadmin_password.result
           }
-          osApplicationCredentialId     = var.application_credential_id
-          osApplicationCredentialSecret = var.application_credential_secret
-          osAuthUrl                     = var.os_auth_url
-          proxyHost                     = var.proxy_host
-          proxyKey                      = var.proxy_key
-          proxyPort                     = var.proxy_port
-          proxyUser                     = var.proxy_user
-          senderEmail                   = var.smtp_config.sender_email
-          senderEmailPassword           = var.smtp_config.sender_email_password
-          smtpEncryption                = var.smtp_config.smtp_encryption
-          smtpPort                      = var.smtp_config.smtp_port
-          smtpServer                    = var.smtp_config.smtp_server
+          openstack           = var.openstack_config
+          proxyHost           = var.proxy_host
+          proxyKey            = var.proxy_key
+          proxyPort           = var.proxy_port
+          proxyUser           = var.proxy_user
+          senderEmail         = var.smtp_config.sender_email
+          senderEmailPassword = var.smtp_config.sender_email_password
+          smtpEncryption      = var.smtp_config.smtp_encryption
+          smtpPort            = var.smtp_config.smtp_port
+          smtpServer          = var.smtp_config.smtp_server
         }
       }
     )

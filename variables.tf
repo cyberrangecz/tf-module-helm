@@ -3,19 +3,6 @@ variable "acme_contact" {
   description = "Let's encrypt contact email address"
 }
 
-variable "application_credential_id" {
-  type        = string
-  description = "Application credentials ID for accessing OpenStack project (mutually exclusive with aws parameter)"
-  default     = ""
-}
-
-variable "application_credential_secret" {
-  type        = string
-  description = "Application credentials secret for accessing OpenStack project (mutually exclusive with aws parameter)"
-  sensitive   = true
-  default     = ""
-}
-
 variable "aws_config" {
   type = object({
     accessKeyId      = string
@@ -27,7 +14,7 @@ variable "aws_config" {
     eksSgId          = string
     }
   )
-  description = "AWS configuration (mutually exclusive with application_credential_id, application_credential_secret and os_auth_url parameters)"
+  description = "AWS configuration (mutually exclusive with openstack_config parameter)"
   sensitive   = true
   default = {
     accessKeyId      = ""
@@ -109,7 +96,7 @@ variable "certs_version" {
 variable "head_version" {
   type        = string
   description = "Version of head helm package"
-  default     = "1.0.0"
+  default     = "3.1.0"
 }
 
 variable "gen_users_version" {
@@ -124,10 +111,23 @@ variable "postgres_version" {
   default     = "1.0.0"
 }
 
-variable "os_auth_url" {
-  type        = string
-  description = "OpenStack authentication URL (mutually exclusive with aws parameter)"
-  default     = ""
+variable "openstack_config" {
+  type = object({
+    authUrl                     = string
+    applicationCredentialId     = string
+    applicationCredentialSecret = string
+    consoleType                 = optional(string, "spice-html5")
+    hypervisorCidr              = optional(string, "10.99.0.0/16")
+    mirrorType                  = optional(string, "erspanv1")
+    }
+  )
+  description = "OpenStack configuration (mutually exclusive with aws_config parameter)"
+  sensitive   = true
+  default = {
+    authUrl                     = ""
+    applicationCredentialId     = ""
+    applicationCredentialSecret = ""
+  }
 }
 
 variable "oidc_providers" {
