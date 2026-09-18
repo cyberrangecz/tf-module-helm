@@ -124,6 +124,12 @@ variable "postgres_version" {
   default     = "1.0.0"
 }
 
+variable "keycloak_resource_operator_version" {
+  type        = string
+  description = "Version of the Hostzero Keycloak operator helm chart (manages realms/clients/users)"
+  default     = "0.12.0"
+}
+
 variable "os_auth_url" {
   type        = string
   description = "OpenStack authentication URL (mutually exclusive with aws parameter)"

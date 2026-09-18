@@ -75,6 +75,16 @@ resource "helm_release" "keycloak_operator" {
   wait             = true
 }
 
+resource "helm_release" "keycloak_resource_operator" {
+  name             = "keycloak-resource-operator"
+  namespace        = "keycloak-operator"
+  repository       = "oci://ghcr.io/hostzero-gmbh/charts"
+  chart            = "keycloak-operator"
+  version          = var.keycloak_resource_operator_version
+  create_namespace = true
+  wait             = true
+}
+
 resource "random_password" "keycloak_password" {
   length  = 20
   special = false
@@ -184,6 +194,7 @@ resource "helm_release" "head" {
     helm_release.postgres,
     helm_release.certs,
     helm_release.keycloak_operator,
+    helm_release.keycloak_resource_operator,
     helm_release.opensearch
   ]
 }
