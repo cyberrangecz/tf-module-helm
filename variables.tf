@@ -3,19 +3,6 @@ variable "acme_contact" {
   description = "Let's encrypt contact email address"
 }
 
-variable "application_credential_id" {
-  type        = string
-  description = "Application credentials ID for accessing OpenStack project (mutually exclusive with aws parameter)"
-  default     = ""
-}
-
-variable "application_credential_secret" {
-  type        = string
-  description = "Application credentials secret for accessing OpenStack project (mutually exclusive with aws parameter)"
-  sensitive   = true
-  default     = ""
-}
-
 variable "aws_config" {
   type = object({
     accessKeyId      = string
@@ -27,7 +14,7 @@ variable "aws_config" {
     eksSgId          = string
     }
   )
-  description = "AWS configuration (mutually exclusive with application_credential_id, application_credential_secret and os_auth_url parameters)"
+  description = "AWS configuration (mutually exclusive with openstack_config parameter)"
   sensitive   = true
   default = {
     accessKeyId      = ""
@@ -78,7 +65,7 @@ variable "git_config" {
     providers            = {}
     user                 = "git"
     ansibleNetworkingUrl = "https://github.com/cyberrangecz/ansible-stage-one.git"
-    ansibleNetworkingRev = "v1.0.18"
+    ansibleNetworkingRev = "v2.3.0"
   }
 }
 
@@ -108,8 +95,13 @@ variable "certs_version" {
 
 variable "head_version" {
   type        = string
-  description = "Version of head helm package"
-  default     = "1.0.0"
+  description = "Version of head helm package (4.0.0 or newer; older charts do not read openstack_config)"
+  default     = "4.0.0"
+
+  validation {
+    condition     = try(tonumber(regex("^v?([0-9]+)\\.", var.head_version)[0]), 0) >= 4
+    error_message = "head_version must be 4.0.0 or newer: this module passes sandbox.openstack, which older head charts ignore."
+  }
 }
 
 variable "gen_users_version" {
@@ -130,10 +122,22 @@ variable "keycloak_resource_operator_version" {
   default     = "0.12.0"
 }
 
-variable "os_auth_url" {
-  type        = string
-  description = "OpenStack authentication URL (mutually exclusive with aws parameter)"
-  default     = ""
+variable "openstack_config" {
+  type = object({
+    authUrl                     = string
+    applicationCredentialId     = string
+    applicationCredentialSecret = string
+    consoleType                 = optional(string)
+    }
+  )
+  description = "OpenStack configuration (mutually exclusive with aws_config parameter)"
+  sensitive   = true
+  nullable    = false
+  default = {
+    authUrl                     = ""
+    applicationCredentialId     = ""
+    applicationCredentialSecret = ""
+  }
 }
 
 variable "oidc_providers" {
