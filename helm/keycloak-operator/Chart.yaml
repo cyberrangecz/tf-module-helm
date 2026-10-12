@@ -1,5 +1,0 @@
-apiVersion: v2
-name: keycloak-operator
-description: Chart for deploying Keycloak Operator
-type: application
-version: 1.0.0

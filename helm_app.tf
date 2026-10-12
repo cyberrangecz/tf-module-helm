@@ -69,15 +69,34 @@ resource "helm_release" "users" {
 
 resource "helm_release" "keycloak_operator" {
   name             = "keycloak-operator"
-  namespace        = "crczp"
-  chart            = "${path.module}/helm/keycloak-operator"
+  namespace        = "keycloak-system"
+  repository       = "oci://quay.io/keycloak"
+  chart            = "keycloak-operator-helm"
+  version          = var.keycloak_operator_version
   create_namespace = true
   wait             = true
+
+  # The chart defaults to a cluster-wide install; watch only the namespace holding the Keycloak CR
+  values = [yamlencode({
+    operator = {
+      envs = {
+        QUARKUS_OPERATOR_SDK_CONTROLLERS_KEYCLOAKCONTROLLER_NAMESPACES            = "crczp"
+        QUARKUS_OPERATOR_SDK_CONTROLLERS_KEYCLOAKREALMIMPORTCONTROLLER_NAMESPACES = "crczp"
+        QUARKUS_OPERATOR_SDK_CONTROLLERS_KEYCLOAKOIDCCLIENTCONTROLLER_NAMESPACES  = "crczp"
+        QUARKUS_OPERATOR_SDK_CONTROLLERS_KEYCLOAKSAMLCLIENTCONTROLLER_NAMESPACES  = "crczp"
+      }
+    }
+  })]
+
+  # The chart creates its RoleBindings in crczp, which the certs release creates
+  depends_on = [
+    helm_release.certs
+  ]
 }
 
 resource "helm_release" "keycloak_resource_operator" {
   name             = "keycloak-resource-operator"
-  namespace        = "keycloak-operator"
+  namespace        = "keycloak-resource-operator"
   repository       = "oci://ghcr.io/hostzero-gmbh/charts"
   chart            = "keycloak-operator"
   version          = var.keycloak_resource_operator_version
