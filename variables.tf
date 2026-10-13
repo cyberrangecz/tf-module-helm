@@ -95,12 +95,12 @@ variable "certs_version" {
 
 variable "head_version" {
   type        = string
-  description = "Version of head helm package (4.0.0 or newer; older charts do not read openstack_config)"
-  default     = "4.0.0"
+  description = "Version of head helm package (5.0.0 or newer; older charts ship a Keycloak CR that cannot start on Keycloak 26)"
+  default     = "5.0.0"
 
   validation {
-    condition     = try(tonumber(regex("^v?([0-9]+)\\.", var.head_version)[0]), 0) >= 4
-    error_message = "head_version must be 4.0.0 or newer: this module passes sandbox.openstack, which older head charts ignore."
+    condition     = try(tonumber(regex("^v?([0-9]+)\\.", var.head_version)[0]), 0) >= 5
+    error_message = "head_version must be 5.0.0 or newer: older head charts configure Keycloak with hostname:v1, which the Keycloak 26 installed by this module rejects."
   }
 }
 
@@ -116,10 +116,16 @@ variable "postgres_version" {
   default     = "1.0.0"
 }
 
+variable "keycloak_operator_version" {
+  type        = string
+  description = "Version of the official (experimental) Keycloak operator helm chart; also sets the Keycloak server version"
+  default     = "26.8.0"
+}
+
 variable "keycloak_resource_operator_version" {
   type        = string
   description = "Version of the Hostzero Keycloak operator helm chart (manages realms/clients/users)"
-  default     = "0.12.0"
+  default     = "0.13.1"
 }
 
 variable "openstack_config" {
