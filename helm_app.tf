@@ -13,6 +13,12 @@ locals {
   ]
 
   value_files_paths = [for value_file in var.value_files : file(value_file)]
+
+  # Applied last, so a tag set here wins over the chart and the value files.
+  # Left out when empty, so existing deployments see no change.
+  image_tag_values = length(var.image_tags) > 0 ? [
+    jsonencode({ for name, tag in var.image_tags : name => { image = { tag = tag } } })
+  ] : []
 }
 
 resource "helm_release" "certs" {
@@ -203,7 +209,7 @@ resource "helm_release" "head" {
         }
       }
     )
-  ])
+  ], local.image_tag_values)
   create_namespace = true
   atomic           = true
   timeout          = var.deploy_head_timeout

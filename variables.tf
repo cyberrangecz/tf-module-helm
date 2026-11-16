@@ -104,6 +104,21 @@ variable "head_version" {
   }
 }
 
+variable "image_tags" {
+  type        = map(string)
+  description = "Image tag per head subchart, e.g. { training = \"v3.1.0\" }. A tag can be pinned to a build as \"v3.1.1-dev@sha256:<digest>\". Subcharts left out keep the tag from the head chart."
+  default     = {}
+
+  validation {
+    condition = alltrue([
+      for name, tag in var.image_tags :
+      contains(["answers-storage", "frontend", "guacamole-service", "mitre", "sandbox", "training", "user-and-group"], name)
+      && can(regex("^v?[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?(@sha256:[a-f0-9]{64})?$", tag))
+    ])
+    error_message = "image_tags keys must be one of answers-storage, frontend, guacamole-service, mitre, sandbox, training, user-and-group, and each value a version tag such as v3.1.0 or v3.1.1-dev, optionally pinned as <tag>@sha256:<64 hex digest>."
+  }
+}
+
 variable "gen_users_version" {
   type        = string
   description = "Version of gen-users helm package"
