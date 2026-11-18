@@ -96,7 +96,7 @@ variable "certs_version" {
 variable "head_version" {
   type        = string
   description = "Version of head helm package (5.0.0 or newer; older charts ship a Keycloak CR that cannot start on Keycloak 26)"
-  default     = "5.0.0"
+  default     = "5.1.1"
 
   validation {
     condition     = try(tonumber(regex("^v?([0-9]+)\\.", var.head_version)[0]), 0) >= 5
